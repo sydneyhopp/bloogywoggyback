@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from pymongo.mongo_client import MongoClient
-import uuid
-import datetime
+import uuid, json, datetime
+from bson.json_util import dumps
+
 # from pymongo.server_api import ServerApi # don't know why MongoDB suggest this
 
 uri = "mongodb+srv://admin:joeSydsam@clusterwuster.rgsli.mongodb.net/?retryWrites=true&w=majority&appName=ClusterWuster"
@@ -9,7 +10,7 @@ uri = "mongodb+srv://admin:joeSydsam@clusterwuster.rgsli.mongodb.net/?retryWrite
 app = Flask(__name__)
 
 # Create a new client and connect to the server
-client = MongoClient(uri, uuidRepresentation="standard")
+client = MongoClient(uri)
 db = client.blog
 collection = db.post
 
@@ -32,7 +33,7 @@ def post():
     author = data.get("author")
     text = data.get("text")
     pictures = data.get("pictures")
-    id = uuid.uuid4()
+    id = str(uuid.uuid4())
     minute = datetime.datetime.now().minute
     hour = datetime.datetime.now().hour
     date = datetime.datetime.now().day
@@ -57,6 +58,19 @@ def post():
         return jsonify({'error':str(e)}), 500
 
     return jsonify({"message":"added a post successfully"}), 200
+
+@app.route('/grab-posts', methods=['GET'])
+def grab_posts():
+    try: 
+        data = collection.find()
+        json_data = json.loads(dumps(data))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        
+    return jsonify({"data": json_data}), 200
+    
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
