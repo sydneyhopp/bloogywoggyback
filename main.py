@@ -4,12 +4,12 @@ import uuid
 import datetime
 # from pymongo.server_api import ServerApi # don't know why MongoDB suggest this
 
-uri = "mongodb+srv://admin:<joeSydsam>@clusterwuster.rgsli.mongodb.net/?retryWrites=true&w=majority&appName=ClusterWuster"
+uri = "mongodb+srv://admin:joeSydsam@clusterwuster.rgsli.mongodb.net/?retryWrites=true&w=majority&appName=ClusterWuster"
 
 app = Flask(__name__)
 
 # Create a new client and connect to the server
-client = MongoClient(uri)
+client = MongoClient(uri, uuidRepresentation="standard")
 db = client.blog
 collection = db.post
 
