@@ -10,6 +10,8 @@ uri = "mongodb+srv://admin:joeSydsam@clusterwuster.rgsli.mongodb.net/?retryWrite
 
 app = Flask(__name__)
 
+CORS(app)
+
 # Create a new client and connect to the server
 client = MongoClient(uri)
 db = client.blog
