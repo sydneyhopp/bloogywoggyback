@@ -1,0 +1,7 @@
+Connected to our MongoDB collection.
+
+Added a health check route.
+
+Added a blog post route that posts new blog entry information. Used PostMan to test an entry! It's visible in our MongoDB collection, yay!
+
+Added a route that returns all blog posts in our database! Encountered some setbacks when formatting but fixed it!
