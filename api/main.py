@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from pymongo.mongo_client import MongoClient
 import uuid, json, datetime
 from bson.json_util import dumps
